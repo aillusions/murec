@@ -14,6 +14,22 @@
                             http://www.springframework.org/schema/task
                            http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="/WEB-INF/red5-web.properties" />
+    </bean>
+
+    <bean id="web.context" class="org.red5.server.Context" autowire="byType" />
+
+    <bean id="web.scope" class="org.red5.server.scope.WebScope" init-method="register">
+        <!--<property name="server" ref="red5.server" />
+        <property name="parent" ref="global.scope" />-->
+        <property name="context" ref="web.context" />
+        <property name="handler" ref="web.handler" />
+        <property name="contextPath" value="${webapp.contextPath}" />
+        <property name="virtualHosts" value="${webapp.virtualHosts}" />
+    </bean>
+
+    <bean id="web.handler" class="com.zalizniak.MainRed2" />
 
 </beans>
 
